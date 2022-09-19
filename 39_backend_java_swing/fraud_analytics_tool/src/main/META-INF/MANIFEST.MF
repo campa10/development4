@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: org.example.App
-Class-Path: /home/user1/Documents/hbogantes/branch22/mainp/backend_90_java_swing/fraud_analytics_tool/target/classes/artifact1.jar

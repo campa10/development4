@@ -1,3 +1,0 @@
-https://github.com/electron/electron-quick-start
-https://github.com/electron/electron-quick-start
-https://www.electronjs.org/community#boilerplates
