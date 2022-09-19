@@ -1,12 +1,20 @@
+com/javatodev/api/repository/StudentRepository.java
+ com.javatodev.api.repository.StudentRepository
 com/javatodev/api/service/CourseService.java
  com.javatodev.api.service.CourseService
 com/javatodev/api/SpringBootPostgresqlBaseProjectApplication.java
  com.javatodev.api.SpringBootPostgresqlBaseProjectApplication
 com/javatodev/api/exception/RecordNotFoundException.java
  com.javatodev.api.exception.RecordNotFoundException
+com/javatodev/api/controller/StudentController.java
+ com.javatodev.api.controller.StudentController
+com/javatodev/api/model/Student.java
+ com.javatodev.api.model.Student
 com/javatodev/api/repository/CourseRepository.java
  com.javatodev.api.repository.CourseRepository
 com/javatodev/api/model/Course.java
  com.javatodev.api.model.Course
 com/javatodev/api/controller/CourseController.java
  com.javatodev.api.controller.CourseController
+com/javatodev/api/service/StudentService.java
+ com.javatodev.api.service.StudentService
