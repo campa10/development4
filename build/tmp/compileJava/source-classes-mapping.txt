@@ -1,7 +1,9 @@
+com/javatodev/api/service/CourseService.java
+ com.javatodev.api.service.CourseService
 com/javatodev/api/SpringBootPostgresqlBaseProjectApplication.java
  com.javatodev.api.SpringBootPostgresqlBaseProjectApplication
-com/javatodev/api/service/ProductService.java
- com.javatodev.api.service.ProductService
+com/javatodev/api/exception/RecordNotFoundException.java
+ com.javatodev.api.exception.RecordNotFoundException
 com/javatodev/api/repository/CourseRepository.java
  com.javatodev.api.repository.CourseRepository
 com/javatodev/api/model/Course.java

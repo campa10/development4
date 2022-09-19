@@ -1,12 +1,13 @@
 package com.javatodev.api.controller;
 
+import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.model.Course;
-import com.javatodev.api.service.ProductService;
+import com.javatodev.api.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,10 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
 
-    private final ProductService productService;
+    private final CourseService courseService;
 
-    @GetMapping
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Course>> readProducts () {
-        return ResponseEntity.ok(productService.readProducts());
+        return ResponseEntity.ok(courseService.readProducts());
+    }
+
+    @PostMapping
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseEntity<Course> createOrUpdateRol(@RequestBody Course entity) throws RecordNotFoundException {
+        Course updated = courseService.createOrUpdateCourses(entity);
+        return new ResponseEntity<Course>(updated, new HttpHeaders(), HttpStatus.OK);
     }
 }

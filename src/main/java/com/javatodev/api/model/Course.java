@@ -14,6 +14,8 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="coursename")
     private String coursename;
 
 }
