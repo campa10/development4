@@ -1,36 +1,35 @@
 # Spring Boot PostgreSQL Base Project
 
-This application was developed to demonstrate Spring Boot with PostgreSQL with simple API.
+Hernan Bogantes 
+September 18, 2022
 
 Technologies Used
-
 - Spring Boot 2.4.1
 - Spring Data JPA
 - Lombok
 - PostgreSQL
 
 How to Run this application
+I created this using Linux OS
+Please follow this steps 
 
-First change the **src/main/resources/application.properties** with your postgreSQL instance properties.
+1
+./gradlew clean build
 
-Then,
+2
+sudo docker-compose build
 
-```shell
-$ ./gradlew bootRun
-```
+3
+sudo docker-compose up
 
-or create a build using following command,
+4
+To fetch all courses
+http://localhost:8080/courses/getAll
 
-```shell
-$ ./gradlew clean build
-```
+5
+To  add new courses (POST action)
+PLease do first a getAll to find out the next inmediate ID Sequence number so you can get a successfull submission
+curl --location --request POST 'http://localhost:8080/courses/add' --header 'Content-Type: application/json' --data-raw '{ "id":"116", "coursename": "course5" }'
 
-Then start the JAR file using java
+6
 
-```shell
-$ java -jar build/libs/spring-boot-postgresql-base-project-0.0.1-SNAPSHOT.jar
-```
-
-### Related Articles
-
-- [Docker Compose For Spring Boot with PostgreSQL](https://javatodev.com/docker-compose-spring-boot-postgresql/)
