@@ -18,4 +18,6 @@ public class Student {
     @Column(name="studentname")
     private String studentname;
 
+    @Column(name="courseid")
+    private Long courseid;
 }

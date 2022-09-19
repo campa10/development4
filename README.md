@@ -32,4 +32,9 @@ PLease do first a getAll to find out the next inmediate ID Sequence number so yo
 curl --location --request POST 'http://localhost:8080/courses/add' --header 'Content-Type: application/json' --data-raw '{ "id":"116", "coursename": "course5" }'
 
 6
+To add new Students you can run this (POST)
+curl --location --request POST 'http://localhost:8080/students/add' --header 'Content-Type: application/json' --data-raw '{"id": 120,"studentname": "student7","courseid": 3 }'
+To continue adding you need to check the latest id and use the immediate next value. The autoincrement was not set it up.
+
+
 
