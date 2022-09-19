@@ -18,12 +18,14 @@ CREATE TABLE IF NOT EXISTS students (
 	CONSTRAINT students_studentname_key UNIQUE (courseid, studentname)
 );
 
+DELETE FROM public.courses;
 INSERT INTO public.courses (coursename) VALUES('course1');
 INSERT INTO public.courses (coursename) VALUES('course2');
 INSERT INTO public.courses (coursename) VALUES('course3');
 INSERT INTO public.courses (coursename) VALUES('course4');
 INSERT INTO public.courses (coursename) VALUES('course5');
 
+DELETE FROM public.students;
 INSERT INTO public.students (courseid, studentname) VALUES(1, 'student1');
 INSERT INTO public.students (courseid, studentname) VALUES(2, 'student1');
 INSERT INTO public.students (courseid, studentname) VALUES(3, 'student1');
