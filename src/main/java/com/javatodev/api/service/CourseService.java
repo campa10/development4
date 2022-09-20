@@ -21,11 +21,15 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Course createOrUpdateCourses(Course entity) throws RecordNotFoundException
+    public Course createOrUpdateCourses(Course entity) throws Exception
     {
-        Optional<Course> employee = courseRepository.findById(entity.getId());
-        if(employee.isPresent()){
-            Course newEntity = employee.get();
+        Optional<Course> courses = courseRepository.findById(entity.getId());
+        if(courses.isPresent()){
+            System.out.println("Sorry but the max of students is: " + courseRepository.findAll().stream().count());
+            if(courseRepository.findAll().stream().count() <= 6){
+                throw new Exception("This course can not accept any more enrollments");
+            }
+            Course newEntity = courses.get();
             newEntity.setCoursename(entity.getCoursename());
             newEntity = courseRepository.save(newEntity);
             return newEntity;

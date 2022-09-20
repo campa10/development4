@@ -24,7 +24,9 @@ sudo docker-compose up
 
 4
 To fetch all courses
-http://localhost:8080/courses/getAll
+http://localhost:8080/courses/getAll (courses)
+http://localhost:8080/students/getAll (students)
+http://localhost:8080/students/enrollment (University enrollment)
 
 5
 To  add new courses (POST action)

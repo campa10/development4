@@ -21,6 +21,10 @@ public class StudentService {
         return StudentRepository.findAll();
     }
 
+    public List<Student> getAll () {
+        return StudentRepository.getAll();
+    }
+
     public Student createOrUpdateStudents(Student entity) throws RecordNotFoundException
     {
         Optional<Student> employee = StudentRepository.findById(entity.getId());

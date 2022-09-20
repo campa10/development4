@@ -25,6 +25,13 @@ public class StudentController {
         return ResponseEntity.ok(studentService.readStudents());
     }
 
+    @RequestMapping(value = "/enrollment", method = RequestMethod.GET)
+    public ResponseEntity<List<Student>> enrollment () {
+        return ResponseEntity.ok(studentService.getAll());
+
+    }
+
+
     @PostMapping
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Student> createOrUpdateRol(@RequestBody Student entity) throws RecordNotFoundException {

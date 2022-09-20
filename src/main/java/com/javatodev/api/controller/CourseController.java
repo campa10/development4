@@ -25,7 +25,7 @@ public class CourseController {
 
     @PostMapping
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Course> createOrUpdateRol(@RequestBody Course entity) throws RecordNotFoundException {
+    public ResponseEntity<Course> createOrUpdateRol(@RequestBody Course entity) throws Exception {
         Course updated = courseService.createOrUpdateCourses(entity);
         return new ResponseEntity<Course>(updated, new HttpHeaders(), HttpStatus.OK);
     }
