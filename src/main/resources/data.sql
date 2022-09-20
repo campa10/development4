@@ -4,13 +4,13 @@ CREATE TABLE IF NOT EXISTS Product(
     "name" varchar(255) NULL,
     CONSTRAINT product_pkey PRIMARY KEY (id)
 );
-CREATE TABLE IF NOT EXISTS courses (
+CREATE TABLE IF NOT EXISTS course (
 	id serial4 NOT NULL,
 	coursename varchar(50) NOT NULL,
 	CONSTRAINT course_pkey PRIMARY KEY (id),
 	CONSTRAINT courses_coursename_key UNIQUE (coursename)
 );
-CREATE TABLE IF NOT EXISTS students (
+CREATE TABLE IF NOT EXISTS student (
 	id serial4 NOT NULL,
 	courseid int4 NOT NULL,
 	studentname varchar(50) NOT NULL,
@@ -18,23 +18,23 @@ CREATE TABLE IF NOT EXISTS students (
 	CONSTRAINT students_studentname_key UNIQUE (courseid, studentname)
 );
 
-DELETE FROM public.courses;
-INSERT INTO public.courses (coursename) VALUES('course1');
-INSERT INTO public.courses (coursename) VALUES('course2');
-INSERT INTO public.courses (coursename) VALUES('course3');
-INSERT INTO public.courses (coursename) VALUES('course4');
-INSERT INTO public.courses (coursename) VALUES('course5');
+DELETE FROM public.course;
+INSERT INTO public.course (coursename) VALUES('course1');
+INSERT INTO public.course (coursename) VALUES('course2');
+INSERT INTO public.course (coursename) VALUES('course3');
+INSERT INTO public.course (coursename) VALUES('course4');
+INSERT INTO public.course (coursename) VALUES('course5');
 
-DELETE FROM public.students;
-INSERT INTO public.students (courseid, studentname) VALUES(1, 'student1');
-INSERT INTO public.students (courseid, studentname) VALUES(2, 'student1');
-INSERT INTO public.students (courseid, studentname) VALUES(3, 'student1');
-INSERT INTO public.students (courseid, studentname) VALUES(1, 'student2');
-INSERT INTO public.students (courseid, studentname) VALUES(2, 'student2');
-INSERT INTO public.students (courseid, studentname) VALUES(3, 'student');
-INSERT INTO public.students (courseid, studentname) VALUES(1, 'student3');
-INSERT INTO public.students (courseid, studentname) VALUES(2, 'student3');
-INSERT INTO public.students (courseid, studentname) VALUES(3, 'student3');
+DELETE FROM public.student;
+INSERT INTO public.student (courseid, studentname) VALUES(1, 'student1');
+INSERT INTO public.student (courseid, studentname) VALUES(2, 'student1');
+INSERT INTO public.student (courseid, studentname) VALUES(3, 'student1');
+INSERT INTO public.student (courseid, studentname) VALUES(1, 'student2');
+INSERT INTO public.student (courseid, studentname) VALUES(2, 'student2');
+INSERT INTO public.student (courseid, studentname) VALUES(3, 'student');
+INSERT INTO public.student (courseid, studentname) VALUES(1, 'student3');
+INSERT INTO public.student (courseid, studentname) VALUES(2, 'student3');
+INSERT INTO public.student (courseid, studentname) VALUES(3, 'student3');
 
 
 
