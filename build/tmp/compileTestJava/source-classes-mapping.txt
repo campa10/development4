@@ -1,4 +1,0 @@
-com/javatodev/test/CourseServiceTest.java
- com.javatodev.test.CourseServiceTest
-com/javatodev/test/SpringBootPostgresqlBaseProjectApplicationTests.java
- com.javatodev.test.SpringBootPostgresqlBaseProjectApplicationTests
