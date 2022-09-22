@@ -1,6 +1,5 @@
 package com.javatodev.api.controller;
 
-import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.model.Course;
 import com.javatodev.api.model.Student;
 import com.javatodev.api.service.CourseService;
@@ -22,20 +21,13 @@ public class StudentController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Student>> readProducts () {
-        return ResponseEntity.ok(studentService.readStudents());
+        return ResponseEntity.ok(studentService.readProducts());
     }
-
-    @RequestMapping(value = "/enrollment", method = RequestMethod.GET)
-    public ResponseEntity<List<Student>> enrollment () {
-        return ResponseEntity.ok(studentService.getAll());
-
-    }
-
 
     @PostMapping
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Student> createOrUpdateRol(@RequestBody Student entity) throws RecordNotFoundException {
-        Student updated = studentService.createOrUpdateStudents(entity);
+    public ResponseEntity<Student> createOrUpdateRol(@RequestBody Student entity) throws Exception {
+        Student updated = studentService.createOrUpdateCourses(entity);
         return new ResponseEntity<Student>(updated, new HttpHeaders(), HttpStatus.OK);
     }
 }

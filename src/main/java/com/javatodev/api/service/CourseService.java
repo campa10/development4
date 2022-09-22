@@ -25,10 +25,6 @@ public class CourseService {
     {
         Optional<Course> courses = courseRepository.findById(entity.getId());
         if(courses.isPresent()){
-            System.out.println("Sorry but the max of students is: " + courseRepository.findAll().stream().count());
-            if(courseRepository.findAll().stream().count() <= 6){
-                throw new Exception("This course can not accept any more enrollments");
-            }
             Course newEntity = courses.get();
             newEntity.setCoursename(entity.getCoursename());
             newEntity = courseRepository.save(newEntity);
@@ -36,6 +32,16 @@ public class CourseService {
         } else {
             entity = courseRepository.save(entity);
             return entity;
+        }
+    }
+
+    public void deleteById(Long id) throws RecordNotFoundException
+    {
+        Optional<Course> employee = courseRepository.findById(id);
+        if(employee.isPresent()) {
+            courseRepository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException("No record exist for given id");
         }
     }
 

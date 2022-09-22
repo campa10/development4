@@ -1,16 +1,14 @@
 package com.javatodev.api.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="student")
-@Getter
+@Table(name = "student")
 @Setter
-@NoArgsConstructor
+@Getter
 public class Student {
 
     @Id
@@ -20,15 +18,8 @@ public class Student {
     @Column(name = "studentname")
     private String studentname;
 
-    @OneToOne
-    @JoinColumn(name = "courseid")
-    private Course courseid;
+    @Column(name = "courseid")
+    private Long courseid;
 
-    //private BigDecimal price;
-
-    /*public Laptop(LaptopRequest request) {
-        this.name = request.getName();
-        this.price = request.getPrice();
-    }*/
 
 }

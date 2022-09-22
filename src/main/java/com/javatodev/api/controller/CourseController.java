@@ -29,4 +29,11 @@ public class CourseController {
         Course updated = courseService.createOrUpdateCourses(entity);
         return new ResponseEntity<Course>(updated, new HttpHeaders(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public HttpStatus deleteRolById(@PathVariable("id") Long id)
+            throws RecordNotFoundException {
+        courseService.deleteById(id);
+        return HttpStatus.FORBIDDEN;
+    }
 }
