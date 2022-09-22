@@ -14,31 +14,27 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-    
+
     @Autowired
     private final StudentRepository studentRepository;
 
-    public List<Student> readProducts () {
+    public List<Student> readProducts() {
         return studentRepository.findAll();
     }
 
-    public Student createOrUpdateCourses(Student entity) throws Exception
-    {
+    public Student createOrUpdateCourses(Student entity) throws Exception {
 
         Student finalEntity = entity;
-        System.out.println(" -- TOTAL MATRICULADOS -- " + studentRepository.findAll().stream().filter(c -> c.getCourseid().equals(finalEntity.getCourseid())).count());
+        if (studentRepository.findAll().stream().filter(c -> c.getCourseid().equals(finalEntity.getCourseid())).count() >= 6) {
+            System.out.println("\n" +
+                    "---------------------------------------" + "\n" +
+                    "THIS COURSE HAS NO MORE SPACE  TOTAL BOOKED: " + studentRepository.findAll().stream().filter(c -> c.getCourseid().equals(finalEntity.getCourseid())).count() +
+                    "\n" + "---------------------------------------" + "\n");
+            throw new Exception("the course is booked");
+        }
 
         Optional<Student> courses = studentRepository.findById(entity.getId());
-        if(courses.isPresent()){
-
-
-            //studentRepository.findAll().stream().filter(c -> c.getCourseid().equals(finalEntity.getCourseid()))
-            // .count();
-
-
-            /*if(studentRepository.findAll().stream().count() <= 6){
-                throw new Exception("This course can not accept any more enrollments");
-            }*/
+        if (courses.isPresent()) {
             Student newEntity = courses.get();
             newEntity.setStudentname(entity.getStudentname());
             newEntity = studentRepository.save(newEntity);
@@ -48,5 +44,6 @@ public class StudentService {
             return entity;
         }
     }
-
 }
+
+
