@@ -24,9 +24,6 @@ public class Student {
     @Column(name = "studentname")
     private String studentName;
 
-    @Column(name = "courseid")
-    private Long courseId;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

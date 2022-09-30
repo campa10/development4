@@ -82,7 +82,7 @@ public class StudentServiceTest {
     @Test
     void createStudentShouldReturnANewStudent() throws Exception {
         //given:
-        Student student = new Student(null, "Peter", 3L);
+        Student student = new Student(null, "Peter");
         when(studentRepository.save(student)).thenReturn(expectedStudent());
 
         //when:
@@ -95,7 +95,7 @@ public class StudentServiceTest {
     @Test
     void updateStudentShouldReturnAnUpdatedStudent() throws RecordNotFoundException {
         //given:
-        Student student = new Student(1L, "Peter", 3L);
+        Student student = new Student(1L, "Peter");
         when(studentRepository.save(student)).thenReturn(expectedStudent());
 
         //when:
@@ -108,7 +108,7 @@ public class StudentServiceTest {
     @Test
     void createOrUpdateStudentShouldReturnNotFoundException() {
         //given:
-        Student student = new Student(null, null, null);
+        Student student = new Student(null, null);
         when(studentRepository.save(student)).thenThrow(IllegalArgumentException.class);
 
         //when:
@@ -146,18 +146,18 @@ public class StudentServiceTest {
 
     private List<Student> expectedStudents() {
         return Arrays.asList(
-                new Student(1L, "Ringo", 1L),
-                new Student(2L, "John", 1L),
-                new Student(3L, "Paul", 1L),
-                new Student(4L, "George", 1L));
+                new Student(1L, "Ringo"),
+                new Student(2L, "John"),
+                new Student(3L, "Paul"),
+                new Student(4L, "George"));
     }
 
     private Student expectedStudent() {
-        return new Student(1L, "Peter", 3L);
+        return new Student(1L, "Peter");
     }
 
     private Optional<Student> mockedOptionalStudent() {
-        return Optional.of(new Student(1L, "Peter", 3L));
+        return Optional.of(new Student(1L, "Peter"));
     }
 
 }

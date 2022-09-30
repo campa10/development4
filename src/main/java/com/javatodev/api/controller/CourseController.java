@@ -35,7 +35,7 @@ public class CourseController {
         return new ResponseEntity<>(course, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping("/courseName")
+    @GetMapping("/studentName")
     public ResponseEntity<List<Course>> findCoursesByCourseName(@RequestParam String name) {
         List<Course> courses = filterCoursesService.findByStudentName(name);
         return new ResponseEntity<>(courses, new HttpHeaders(), HttpStatus.OK);

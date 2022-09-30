@@ -79,10 +79,10 @@ class FilterStudentsServiceTest {
 
     private List<Student> expectedStudents() {
         return Arrays.asList(
-                new Student(1L, "Ringo", 1L),
-                new Student(2L, "John", 1L),
-                new Student(3L, "Paul", 1L),
-                new Student(4L, "George", 1L));
+                new Student(1L, "Ringo"),
+                new Student(2L, "John"),
+                new Student(3L, "Paul"),
+                new Student(4L, "George"));
     }
 
 }
