@@ -34,14 +34,6 @@ public class CourseService {
         }
     }
 
-    public void deleteById(Long courseId) throws RecordNotFoundException {
-        try {
-            courseRepository.deleteById(courseId);
-        } catch (Exception e) {
-            throw new RecordNotFoundException("No record exist for given id");
-        }
-    }
-
     public Course findById(Long courseId) throws RecordNotFoundException {
         Optional<Course> maybeCourse = courseRepository.findById(courseId);
         return maybeCourse.orElseThrow(() -> new RecordNotFoundException("No record exist for given id"));
@@ -54,6 +46,14 @@ public class CourseService {
     public Course createOrUpdateCourse(Course course) throws RecordNotFoundException {
         try {
             return courseRepository.save(course);
+        } catch (Exception e) {
+            throw new RecordNotFoundException("No record exist for given id");
+        }
+    }
+
+    public void deleteById(Long courseId) throws RecordNotFoundException {
+        try {
+            courseRepository.deleteById(courseId);
         } catch (Exception e) {
             throw new RecordNotFoundException("No record exist for given id");
         }

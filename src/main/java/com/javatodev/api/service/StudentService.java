@@ -21,29 +21,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student createOrUpdateCourses(Student entity) throws Exception {
-
-        Student finalEntity = entity;
-        if (studentRepository.findAll().stream().filter(c -> c.getCourseId().equals(finalEntity.getCourseId())).count() >= 6) {
-            System.out.println("\n" +
-                    "---------------------------------------" + "\n" +
-                    "THIS COURSE HAS NO MORE SPACE  TOTAL BOOKED: " + studentRepository.findAll().stream().filter(c -> c.getCourseId().equals(finalEntity.getCourseId())).count() +
-                    "\n" + "---------------------------------------" + "\n");
-            throw new Exception("the course is booked");
-        }
-
-        Optional<Student> courses = studentRepository.findById(entity.getId());
-        if (courses.isPresent()) {
-            Student newEntity = courses.get();
-            newEntity.setStudentName(entity.getStudentName());
-            newEntity = studentRepository.save(newEntity);
-            return newEntity;
-        } else {
-            entity = studentRepository.save(entity);
-            return entity;
-        }
-    }
-
     public Student createOrUpdateStudent(Student entity) throws RecordNotFoundException {
         try {
             return studentRepository.save(entity);
