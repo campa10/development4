@@ -1,8 +1,7 @@
 package com.javatodev.api.service;
 
-import com.javatodev.api.model.Course;
+import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.model.Student;
-import com.javatodev.api.repository.CourseRepository;
 import com.javatodev.api.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +17,17 @@ public class StudentService {
     @Autowired
     private final StudentRepository studentRepository;
 
-    public List<Student> readProducts() {
+    public List<Student> findStudents() {
         return studentRepository.findAll();
     }
 
     public Student createOrUpdateCourses(Student entity) throws Exception {
 
         Student finalEntity = entity;
-        if (studentRepository.findAll().stream().filter(c -> c.getCourseid().equals(finalEntity.getCourseid())).count() >= 6) {
+        if (studentRepository.findAll().stream().filter(c -> c.getCourseId().equals(finalEntity.getCourseId())).count() >= 6) {
             System.out.println("\n" +
                     "---------------------------------------" + "\n" +
-                    "THIS COURSE HAS NO MORE SPACE  TOTAL BOOKED: " + studentRepository.findAll().stream().filter(c -> c.getCourseid().equals(finalEntity.getCourseid())).count() +
+                    "THIS COURSE HAS NO MORE SPACE  TOTAL BOOKED: " + studentRepository.findAll().stream().filter(c -> c.getCourseId().equals(finalEntity.getCourseId())).count() +
                     "\n" + "---------------------------------------" + "\n");
             throw new Exception("the course is booked");
         }
@@ -36,12 +35,33 @@ public class StudentService {
         Optional<Student> courses = studentRepository.findById(entity.getId());
         if (courses.isPresent()) {
             Student newEntity = courses.get();
-            newEntity.setStudentname(entity.getStudentname());
+            newEntity.setStudentName(entity.getStudentName());
             newEntity = studentRepository.save(newEntity);
             return newEntity;
         } else {
             entity = studentRepository.save(entity);
             return entity;
+        }
+    }
+
+    public Student createOrUpdateStudent(Student entity) throws RecordNotFoundException {
+        try {
+            return studentRepository.save(entity);
+        } catch (Exception e) {
+            throw new RecordNotFoundException("No record exist for given id");
+        }
+    }
+
+    public Student findById(Long studentId) throws RecordNotFoundException {
+        Optional<Student> maybeStudent = studentRepository.findById(studentId);
+        return maybeStudent.orElseThrow(() -> new RecordNotFoundException("No record exist for given id"));
+    }
+
+    public void deleteById(Long studentId) throws RecordNotFoundException {
+        try {
+            studentRepository.deleteById(studentId);
+        } catch (Exception e) {
+            throw new RecordNotFoundException("No record exist for given id");
         }
     }
 }

@@ -1,8 +1,6 @@
 package com.javatodev.api.controller;
 
-import com.javatodev.api.model.Course;
 import com.javatodev.api.model.Student;
-import com.javatodev.api.service.CourseService;
 import com.javatodev.api.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +19,7 @@ public class StudentController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Student>> readProducts () {
-        return ResponseEntity.ok(studentService.readProducts());
+        return ResponseEntity.ok(studentService.findStudents());
     }
 
     @PostMapping
