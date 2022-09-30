@@ -30,7 +30,7 @@ public class EnrollmentService {
         Optional<Enrollment> employee = enrollmentRepository.findById(entity.getId());
         if(employee.isPresent()){
             Enrollment newEntity = employee.get();
-            newEntity.setStudentname(entity.getStudentname());
+            newEntity.setStudentName(entity.getStudentName());
             newEntity = enrollmentRepository.save(newEntity);
             return newEntity;
         } else {

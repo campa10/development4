@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="student")
+@Table(name="enrollment")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,17 +18,10 @@ public class Enrollment {
     private Long id;
 
     @Column(name = "studentname")
-    private String studentname;
+    private String studentName;
 
     @OneToOne
     @JoinColumn(name = "courseid")
-    private Course courseid;
-
-    //private BigDecimal price;
-
-    /*public Laptop(LaptopRequest request) {
-        this.name = request.getName();
-        this.price = request.getPrice();
-    }*/
+    private Course courseId;
 
 }
