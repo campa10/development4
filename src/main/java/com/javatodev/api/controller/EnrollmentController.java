@@ -16,22 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EnrollmentController {
 
-    private final EnrollmentService studentService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Enrollment>> readProducts () {
-        return ResponseEntity.ok(studentService.readStudents());
+    private final EnrollmentService enrollmentService;
+
+    @PostMapping(value = "/add")
+    public ResponseEntity<Enrollment> createOrUpdateEnrollment(@RequestBody Enrollment entity) throws RecordNotFoundException {
+        Enrollment updated = enrollmentService.createOrUpdateEnrollment(entity);
+        return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/enrollment", method = RequestMethod.GET)
-    public ResponseEntity<List<Enrollment>> enrollment () {
-        return ResponseEntity.ok(studentService.getAll());
+    @GetMapping
+    public ResponseEntity<List<Enrollment>> findAll() {
+        List<Enrollment> enrollments = enrollmentService.findEnrollments();
+        return new ResponseEntity<>(enrollments, new HttpHeaders(), HttpStatus.OK);
     }
 
-    @PostMapping
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Enrollment> createOrUpdateRol(@RequestBody Enrollment entity) throws RecordNotFoundException {
-        Enrollment updated = studentService.createOrUpdateStudents(entity);
-        return new ResponseEntity<Enrollment>(updated, new HttpHeaders(), HttpStatus.OK);
-    }
 }

@@ -1,12 +1,16 @@
 package com.javatodev.test.service;
 
+import com.javatodev.api.exception.CourseAlreadyExistException;
 import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.model.Course;
 import com.javatodev.api.repository.CourseRepository;
 import com.javatodev.api.service.CourseService;
+import com.javatodev.api.service.CourseServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,13 +29,13 @@ class CourseServiceTest {
 
     @BeforeAll
     static void setUp() {
-        courseService = new CourseService(courseRepository);
+        courseService = new CourseServiceImpl(courseRepository);
     }
 
     @Test
-    void createCourseShouldReturnANewCourse() throws Exception {
+    void createCourseShouldReturnANewCourse() {
         //given:
-        Course course = new Course(null, "Course 1");
+        Course course = new Course(null, "Course 1", Collections.emptyList());
         when(courseRepository.save(course)).thenReturn(expectedCourse());
 
         //when:
@@ -44,7 +48,7 @@ class CourseServiceTest {
     @Test
     void updateCourseShouldReturnAnUpdatedCourse() throws RecordNotFoundException {
         //given:
-        Course course = new Course(1L, "Course 1");
+        Course course = new Course(1L, "Course 1", Collections.emptyList());
         when(courseRepository.save(course)).thenReturn(expectedCourse());
 
         //when:
@@ -55,16 +59,16 @@ class CourseServiceTest {
     }
 
     @Test
-    void createOrUpdateCourseShouldReturnNotFoundException() {
+    void createOrUpdateCourseShouldReturnCourseAlreadyExistException() {
         //given:
-        Course course = new Course(null, null);
-        when(courseRepository.save(course)).thenThrow(IllegalArgumentException.class);
+        Course course = new Course(null, null, Collections.emptyList());
+        when(courseRepository.save(course)).thenThrow(DataRetrievalFailureException.class);
 
         //when:
         Executable executable = () -> courseService.createOrUpdateCourse(course);
 
         //then:
-        assertThrows(RecordNotFoundException.class, executable, "No record exist for given id");
+        assertThrows(CourseAlreadyExistException.class, executable, "There is already a course with that name.");
     }
 
     @Test
@@ -120,7 +124,7 @@ class CourseServiceTest {
     void deleteCourseShouldReturnRecordNotFoundException() {
         //given:
         Long courseId = null;
-        doThrow(IllegalArgumentException.class).when(courseRepository).deleteById(courseId);
+        doThrow(EmptyResultDataAccessException.class).when(courseRepository).deleteById(courseId);
 
         //when:
         Executable executable = () -> courseService.deleteById(courseId);
@@ -142,20 +146,45 @@ class CourseServiceTest {
         verify(courseRepository).deleteById(courseId);
     }
 
+    @Test
+    void findCourseByNameShouldReturnAListOfCourses() {
+        //given:
+        String name = "course 1";
+        when(courseRepository.findCourseByCourseName(name)).thenReturn(expectedCourses());
+
+        //when:
+        List<Course> courses = courseService.findCourseByName(name);
+
+        //then:
+        assertThat(courses, equalTo(expectedCourses()));
+    }
+
+    @Test
+    void findCourseByIdNotInShouldReturnAListOfCourses() {
+        //given:
+        when(courseRepository.findCourseByIdNotIn(any())).thenReturn(expectedCourses());
+
+        //when:
+        List<Course> courses = courseService.findCourseByIdNotIn(any());
+
+        //then:
+        assertThat(courses, equalTo(expectedCourses()));
+    }
+
     private List<Course> expectedCourses() {
         return Arrays.asList(
-                new Course(1L, "Course 1"),
-                new Course(2L, "Course 2"),
-                new Course(3L, "Course 3"),
-                new Course(4L, "Course 4"));
+                new Course(1L, "Course 1", Collections.emptyList()),
+                new Course(2L, "Course 2", Collections.emptyList()),
+                new Course(3L, "Course 3", Collections.emptyList()),
+                new Course(4L, "Course 4", Collections.emptyList()));
     }
 
     private Course expectedCourse() {
-        return new Course(1L, "Course 1");
+        return new Course(1L, "Course 1", Collections.emptyList());
     }
 
     private Optional<Course> mockedOptionalCourse() {
-        return Optional.of(new Course(1L, "Course 1"));
+        return Optional.of(new Course(1L, "Course 1", Collections.emptyList()));
     }
 
 }

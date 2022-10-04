@@ -8,9 +8,17 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>{
+public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
-    @Query("FROM Student")
-    List<Enrollment> getAll(   );
+    List<Enrollment> findByStudentIdAndCourseId(Long studentId, Long courseId);
 
+    int countEnrollmentByStudentId(Long studentId);
+
+    int countEnrollmentByCourseId(Long courseId);
+
+    @Query("SELECT studentId FROM Enrollment")
+    List<Long> findStudentsIds();
+
+    @Query("SELECT courseId FROM Enrollment")
+    List<Long> findCoursesIds();
 }

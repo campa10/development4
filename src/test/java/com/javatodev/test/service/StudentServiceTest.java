@@ -1,12 +1,17 @@
 package com.javatodev.test.service;
 
 import com.javatodev.api.exception.RecordNotFoundException;
+import com.javatodev.api.exception.StudentAlreadyExistException;
 import com.javatodev.api.model.Student;
 import com.javatodev.api.repository.StudentRepository;
+import com.javatodev.api.service.CourseService;
 import com.javatodev.api.service.StudentService;
+import com.javatodev.api.service.StudentServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,12 +27,12 @@ import static org.mockito.Mockito.*;
 public class StudentServiceTest {
 
     private static StudentService studentService;
-
+    private static final CourseService courseService = mock(CourseService.class);
     private static final StudentRepository studentRepository = mock(StudentRepository.class);
 
     @BeforeAll
     static void setUp() {
-        studentService = new StudentService(studentRepository);
+        studentService = new StudentServiceImpl(studentRepository);
     }
 
     @Test
@@ -80,9 +85,9 @@ public class StudentServiceTest {
     }
 
     @Test
-    void createStudentShouldReturnANewStudent() throws Exception {
+    void createStudentShouldReturnANewStudent() {
         //given:
-        Student student = new Student(null, "Peter");
+        Student student = new Student(null, "Peter", Collections.emptyList());
         when(studentRepository.save(student)).thenReturn(expectedStudent());
 
         //when:
@@ -95,7 +100,7 @@ public class StudentServiceTest {
     @Test
     void updateStudentShouldReturnAnUpdatedStudent() throws RecordNotFoundException {
         //given:
-        Student student = new Student(1L, "Peter");
+        Student student = new Student(1L, "Peter", Collections.emptyList());
         when(studentRepository.save(student)).thenReturn(expectedStudent());
 
         //when:
@@ -106,23 +111,23 @@ public class StudentServiceTest {
     }
 
     @Test
-    void createOrUpdateStudentShouldReturnNotFoundException() {
+    void createOrUpdateStudentShouldReturnStudentAlreadyExistException() {
         //given:
-        Student student = new Student(null, null);
-        when(studentRepository.save(student)).thenThrow(IllegalArgumentException.class);
+        Student student = new Student(null, null, Collections.emptyList());
+        when(studentRepository.save(student)).thenThrow(DataRetrievalFailureException.class);
 
         //when:
         Executable executable = () -> studentService.createOrUpdateStudent(student);
 
         //then:
-        assertThrows(RecordNotFoundException.class, executable, "No record exist for given id");
+        assertThrows(StudentAlreadyExistException.class, executable, "There is already a student with that name.");
     }
 
     @Test
     void deleteStudentShouldReturnRecordNotFoundException() {
         //given:
         Long studentId = null;
-        doThrow(IllegalArgumentException.class).when(studentRepository).deleteById(studentId);
+        doThrow(EmptyResultDataAccessException.class).when(studentRepository).deleteById(studentId);
 
         //when:
         Executable executable = () -> studentService.deleteById(studentId);
@@ -144,20 +149,45 @@ public class StudentServiceTest {
         verify(studentRepository).deleteById(studentId);
     }
 
+    @Test
+    void findStudentByNameShouldReturnAListOfStudents() {
+        //given:
+        String name = "student1";
+        when(studentRepository.findStudentByStudentName(name)).thenReturn(expectedStudents());
+
+        //when:
+        List<Student> students = studentService.findStudentByName(name);
+
+        //then:
+        assertThat(students, equalTo(expectedStudents()));
+    }
+
+    @Test
+    void findStudentByIdNotInShouldReturnAListOfStudents() {
+        //given:
+        when(studentRepository.findStudentByIdNotIn(any())).thenReturn(expectedStudents());
+
+        //when:
+        List<Student> students = studentService.findStudentByIdNotIn(any());
+
+        //then:
+        assertThat(students, equalTo(expectedStudents()));
+    }
+
     private List<Student> expectedStudents() {
         return Arrays.asList(
-                new Student(1L, "Ringo"),
-                new Student(2L, "John"),
-                new Student(3L, "Paul"),
-                new Student(4L, "George"));
+                new Student(1L, "Ringo", Collections.emptyList()),
+                new Student(2L, "John", Collections.emptyList()),
+                new Student(3L, "Paul", Collections.emptyList()),
+                new Student(4L, "George", Collections.emptyList()));
     }
 
     private Student expectedStudent() {
-        return new Student(1L, "Peter");
+        return new Student(1L, "Peter", Collections.emptyList());
     }
 
     private Optional<Student> mockedOptionalStudent() {
-        return Optional.of(new Student(1L, "Peter"));
+        return Optional.of(new Student(1L, "Peter", Collections.emptyList()));
     }
 
 }
