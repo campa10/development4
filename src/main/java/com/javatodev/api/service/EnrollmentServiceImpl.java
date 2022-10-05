@@ -1,6 +1,7 @@
 package com.javatodev.api.service;
 
 import com.javatodev.api.exception.CourseEnrolledExceedException;
+import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.model.Course;
 import com.javatodev.api.model.Enrollment;
 import com.javatodev.api.model.Student;
@@ -60,6 +61,19 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public List<Long> findCoursesIds() {
         return enrollmentRepository.findCoursesIds();
+    }
+
+    @Override
+    public void deleteByStudentName(String studentName) {
+        List<Student> students = studentService.findStudentByName(studentName);
+
+        Student student = students.stream()
+                .findFirst()
+                .orElseThrow(() -> new RecordNotFoundException("No record exist for given id"));
+
+        List<Enrollment> enrollments = enrollmentRepository.findByStudentId(student.getId());
+
+        enrollments.forEach(e -> enrollmentRepository.deleteById(e.getId()));
     }
 
     private boolean alreadySignedUp(Long studentId, Long courseId) {

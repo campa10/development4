@@ -1,5 +1,6 @@
 package com.javatodev.api.service;
 
+import com.javatodev.api.exception.EnrolledException;
 import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.exception.StudentAlreadyExistException;
 import com.javatodev.api.model.Student;
@@ -44,7 +45,10 @@ public class StudentServiceImpl implements StudentService {
             studentRepository.deleteById(studentId);
         } catch (EmptyResultDataAccessException e) {
             throw new RecordNotFoundException("No record exist for given id");
+        } catch (Exception e) {
+            throw new EnrolledException("This student cannot be deleted, it must not have course enrolled.");
         }
+
     }
 
     @Override

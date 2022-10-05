@@ -14,4 +14,5 @@ public interface EnrollmentService {
 
     List<Long> findCoursesIds();
 
+    void deleteByStudentName(String studentName);
 }

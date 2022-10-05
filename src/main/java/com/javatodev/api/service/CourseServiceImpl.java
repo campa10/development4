@@ -1,6 +1,7 @@
 package com.javatodev.api.service;
 
 import com.javatodev.api.exception.CourseAlreadyExistException;
+import com.javatodev.api.exception.EnrolledException;
 import com.javatodev.api.exception.RecordNotFoundException;
 import com.javatodev.api.model.Course;
 import com.javatodev.api.repository.CourseRepository;
@@ -44,6 +45,8 @@ public class CourseServiceImpl implements CourseService {
             courseRepository.deleteById(courseId);
         } catch (EmptyResultDataAccessException e) {
             throw new RecordNotFoundException("No record exist for given id");
+        } catch (Exception e) {
+            throw new EnrolledException("This course cannot be deleted, it must not have students enrolled.");
         }
     }
 

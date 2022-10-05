@@ -31,4 +31,10 @@ public class EnrollmentController {
         return new ResponseEntity<>(enrollments, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/{studentName}")
+    public ResponseEntity<Object> delete(@PathVariable("studentName") String studentName) throws RecordNotFoundException {
+        enrollmentService.deleteByStudentName(studentName);
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
+    }
+
 }
