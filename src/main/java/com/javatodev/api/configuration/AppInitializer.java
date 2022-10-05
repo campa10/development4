@@ -1,4 +1,4 @@
-package com.javatodev.api.config;
+package com.javatodev.api.configuration;
 
 import com.javatodev.api.model.User;
 import com.javatodev.api.repository.UserRepository;
@@ -16,11 +16,9 @@ public class AppInitializer implements SmartInitializingSingleton {
 
     @Override
     public void afterSingletonsInstantiated() {
-        User basicUser = new User(1L, "john", this.passwordEncoder.encode("john"));
-        basicUser.addAuthorities("READ");
+        User basicUser = new User(1L, "john", this.passwordEncoder.encode("john"), true, "USER");
         userRepository.save(basicUser);
-        User writeUser = new User(2L, "peter", this.passwordEncoder.encode("peter"));
-        writeUser.addAuthorities("WRITE");
+        User writeUser = new User(2L, "peter", this.passwordEncoder.encode("peter"), true, "ADMIN");
         userRepository.save(writeUser);
     }
 }

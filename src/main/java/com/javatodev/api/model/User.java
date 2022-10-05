@@ -21,15 +21,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", unique = true)
-    private String username;
-
-    @Column(name = "password")
+    //@Column(unique = true)
+    private String userName;
     private String password;
+    private Boolean active;
+    private String roles;
 
-    @Column(name = "enabled")
-    private Boolean enabled = true;
-
+    //
+/*
     public User(Long id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -41,5 +40,5 @@ public class User {
 
     public void addAuthorities(String authority) {
         this.authorities.add(new UserAuthority(null, this, authority));
-    }
+    }*/
 }

@@ -6,8 +6,4 @@ public class CourseAlreadyExistException extends RuntimeException {
         super(message);
     }
 
-    public CourseAlreadyExistException(String message, Throwable t) {
-        super(message, t);
-    }
-
 }

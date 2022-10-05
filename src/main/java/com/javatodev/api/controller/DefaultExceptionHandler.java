@@ -3,6 +3,8 @@ package com.javatodev.api.controller;
 import com.javatodev.api.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,8 +36,22 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(CourseEnrolledExceedException.class)
-    public ResponseEntity<ErrorMessage> handlerCourseEnrolledExceed(CourseEnrolledExceedException e) {
+    public ResponseEntity<ErrorMessage> handlerCourseEnrolledExceedException(CourseEnrolledExceedException e) {
         ErrorMessage errorMessage = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handlerUsernameNotFoundException(UsernameNotFoundException e) {
+        ErrorMessage errorMessage = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorMessage> handlerBadCredentialsException(BadCredentialsException e) {
+        ErrorMessage errorMessage = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), "Incorrect username or password");
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 

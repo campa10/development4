@@ -6,7 +6,4 @@ public class StudentAlreadyExistException extends RuntimeException {
         super(message);
     }
 
-    public StudentAlreadyExistException(String message, Throwable t) {
-        super(message, t);
-    }
 }
