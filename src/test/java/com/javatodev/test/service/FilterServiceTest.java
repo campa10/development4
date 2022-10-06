@@ -2,7 +2,6 @@ package com.javatodev.test.service;
 
 import com.javatodev.api.model.Course;
 import com.javatodev.api.model.Student;
-import com.javatodev.api.repository.StudentRepository;
 import com.javatodev.api.service.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,14 +25,14 @@ public class FilterServiceTest {
 
     @BeforeAll
     static void setUp() {
-        filterService = new FilterServiceImpl(courseService,studentService, enrollmentService);
+        filterService = new FilterServiceImpl(courseService, studentService, enrollmentService);
     }
 
 
     @Test
     void findAllStudentsWithoutAnyCoursesShouldReturnListOfStudents() {
         //given:
-        when(enrollmentService.findStudentsIds()).thenReturn(Arrays.asList(1L,2L));
+        when(enrollmentService.findStudentsIds()).thenReturn(Arrays.asList(1L, 2L));
         when(studentService.findStudentByIdNotIn(any())).thenReturn(mockedStudents());
 
         //when:
@@ -46,7 +45,7 @@ public class FilterServiceTest {
     @Test
     void findAllCoursesWithOutAnyStudentShouldReturnListOfStudents() {
         //given:
-        when(enrollmentService.findCoursesIds()).thenReturn(Arrays.asList(1L,2L));
+        when(enrollmentService.findCoursesIds()).thenReturn(Arrays.asList(1L, 2L));
         when(courseService.findCourseByIdNotIn(any())).thenReturn(expectedCourses());
 
         //when:
@@ -57,7 +56,7 @@ public class FilterServiceTest {
     }
 
     @Test
-    void findStudentByCourseNameShouldReturnStudentsOfThatCourse(){
+    void findStudentByCourseNameShouldReturnStudentsOfThatCourse() {
         //given:
         String name = "course1";
         when(courseService.findCourseByName(name)).thenReturn(expectedCourses());
@@ -95,7 +94,7 @@ public class FilterServiceTest {
 
     private List<Course> expectedCourses() {
         List<Student> students = Arrays.asList(new Student(1L, "student1", Collections.emptyList()));
-        return Arrays.asList(new Course(1L,"course1", students));
+        return Arrays.asList(new Course(1L, "course1", students));
     }
 
     private List<Student> expectedStudentsWithCourse() {
